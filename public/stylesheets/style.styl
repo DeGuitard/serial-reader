@@ -1,0 +1,86 @@
+navbar-height = 0px
+color-A = #542437
+color-B = #53777A
+color-C = #C02942
+color-D = #D95B43
+color-E = #ECD078
+
+html, body
+  height 100%
+
+body
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
+  padding-top navbar-height
+
+h1
+  color #000
+
+#sidebar
+  background-color #f3f3f3
+  position fixed
+  left 0
+  top navbar-height
+  height 100%
+  padding-top 20px
+  z-index 10
+  background-image linear-gradient(to bottom, color-A 0px, color-B 100%)
+  background-repeat repeat-x
+  border-color #DCDCDC
+  box-shadow 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 1px 0px rgba(255, 255, 255, 0.1)
+
+#sidebar .glyphicon
+  padding-right 20px
+
+#sidebar .nav a
+  color color-D
+  margin 5px 0
+
+#sidebar .nav a:hover
+  background-color transparent !important
+  color #ffffff
+
+#sidebar .form-group
+  margin 20px 0
+
+#sidebar i
+  top 0px !important
+
+#loader-container
+  margin 0
+  padding 0
+  width 100%
+  height 100vh
+  position absolute
+  left 0
+  top 0
+  text-align center
+  background-color color-C
+  z-index 9
+
+#main-pane
+  background-image linear-gradient(to bottom, #E5E5E5 0px, #F0F0F0 100%)
+
+.manga-cell
+  text-align center
+  height 370px
+
+.manga-cell-thumbnail img
+  margin 0 auto
+
+.manga-cell-year
+  font-size 0.85em
+
+.manga-cell-genres
+  font-variant small-caps
+  font-size 0.85em
+
+.manga-details-row
+  margin 10px 0
+
+.manga-details-desc
+  font-weight bold
+  font-variant small-caps
+
+.label-genre
+  margin 0 3px
+  display inline-block
