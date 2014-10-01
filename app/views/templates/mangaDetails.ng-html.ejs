@@ -1,0 +1,76 @@
+<script type="text/ng-template" id="manga-details-modal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">{{manga.title}}</h3>
+    </div>
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{{manga.thumbnail}}" class="thumbnail center-block" alt="thumbnail" />
+            </div>
+            <div class="col-md-8">
+                <div class="row manga-details-row">
+                    <div class="col-md-3 manga-details-desc">Author(s):</div>
+                    <div class="col-md-9">
+                        <span ng-repeat="author in manga.authors"><a href="" ng-click="addCriteria('authors', author)">{{author}}</a><span ng-show="!$last">, </span></span>
+                    </div>
+                </div>
+                <div class="row manga-details-row">
+                    <div class="col-md-3 manga-details-desc">Artist(s):</div>
+                    <div class="col-md-9">
+                        <span ng-repeat="artist in manga.artists"><a href="" ng-click="addCriteria('artists', artist)">{{artist}}</a><span ng-show="!$last">, </span></span>
+                    </div>
+                </div>
+                <div class="row manga-details-row">
+                    <div class="col-md-3 manga-details-desc">Year:</div>
+                    <div class="col-md-9">{{manga.year}}</div>
+                </div>
+                <div class="row manga-details-row">
+                    <div class="col-md-3 manga-details-desc">Genre(s):</div>
+                    <div class="col-md-9">
+                        <a ng-repeat="genre in manga.genres" href="" ng-click="addCriteria('genres', genre)" class="label label-default label-genre">{{genre}}</a>
+                    </div>
+                </div>
+                <div class="row manga-details-row" ng-show="manga.suggestions.length > 0">
+                    <div class="col-md-3 manga-details-desc">Similar:</div>
+                    <div class="col-md-9">
+                        <span ng-repeat="suggestion in manga.suggestions"><a href="" ng-click="lookForManga(suggestion)">{{suggestion}}</a><span ng-show="!$last">, </span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-margin-bottom" ng-hide="loading || loadingFailure">
+            <div class="col-md-10 col-md-offset-1">
+                <span class="manga-details-desc">Chapters:</span>
+                <div class="input-group">
+                    <ui-select ng-model="chapter.selected" theme="bootstrap">
+                        <ui-select-match placeholder="Select or search a chapter…">{{'Chapter ' + $select.selected.number}}</ui-select-match>
+                        <ui-select-choices repeat="chapter in manga.chapters | filter: {number: $select.search}">
+                            <div ng-bind-html="'Chapter ' + chapter.number | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-class="{disabled: !chapter.selected}">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-hide="loading || loadingFailure">
+            <div class="col-md-10 col-md-offset-1">
+                <span class="manga-details-desc">Summary:</span>
+                <p class="text-justify">{{manga.summary}}</p>
+            </div>
+        </div>
+
+        <div class="row" ng-show="loadingFailure">
+            <alert class="col-md-10 col-md-offset-1" type="danger">Oops, something has come up! Try to close and re-open the manga. If the issue persists, contact us ;-).</alert>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="close()">Close</button>
+    </div>
+</script>

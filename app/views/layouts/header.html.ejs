@@ -4,20 +4,24 @@
     <title><%= title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
-    <link rel='stylesheet' href='/stylesheets/bootstrap-theme.min.css' />
+    <link rel='stylesheet' href='/stylesheets/select.min.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/animation.css' />
-    <script src="/javascripts/angular.min.js"></script>
-    <script src="/javascripts/angular-animate/angular-animate.min.js"></script>
-    <script src="/javascripts/angular-touch/angular-touch.min.js"></script>
-    <script src="/javascripts/bootstrap.min.js"></script>
-    <script src="/javascripts/ui-bootstrap-tpls.min.js"></script>
+    <script src="/javascripts/lib/angular.min.js"></script>
+    <script src="/javascripts/lib/angular-animate/angular-animate.min.js"></script>
+    <script src="/javascripts/lib/angular-touch/angular-touch.min.js"></script>
+    <script src="/javascripts/lib/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="/javascripts/lib/bootstrap.min.js"></script>
+    <script src="/javascripts/lib/select.min.js"></script>
+    <script src="/javascripts/lib/ui-bootstrap-tpls.min.js"></script>
+    <script src="/javascripts/utils.js"></script>
     <script src="/javascripts/ctrl/MainCtrl.js"></script>
     <script src="/javascripts/ctrl/MangaCtrl.js"></script>
+    <script src="/javascripts/filters.js"></script>
     <script src="/javascripts/serial-reader.js"></script>
 </head>
-<body>
-<div class="container-fluid" ng-controller="MainCtrl">
+<body ng-controller="MainCtrl">
+<div class="container-fluid">
     <div class="row" ng-swipe-left="toggleSidebar(false)" ng-swipe-right="toggleSidebar(true)">
         <div class="col-md-2 .hidden-sm .hidden-xs"></div>
         <div class="col-md-2 col-xs-12" id="sidebar" ng-show="sidebarVisible">
@@ -30,11 +34,17 @@
                 <li>
                     <form class="form" role="search">
                         <div class="form-group has-feedback">
-                            <input type="text" class="form-control" ng-model="filters" placeholder="Search">
-                            <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                            <input type="text" class="form-control" ng-model="filters.query" placeholder="Search">
+                            <i class="glyphicon glyphicon-search form-control-feedback" ng-hide="filters.query"></i>
+                            <i class="glyphicon glyphicon-remove form-control-feedback glyphicon-clickable" ng-show="filters.query" ng-click="filters.query = ''"></i>
                         </div>
                     </form>
                 </li>
             </ul>
+            <div>
+                <a href="" ng-click="removeCriteria('authors', author)" ng-repeat="author in filters.authors" class="label label-author">{{author}} <span class="glyphicon glyphicon-remove"></span></a>
+                <a href="" ng-click="removeCriteria('artists', artist)" ng-repeat="artist in filters.artists" class="label label-artist">{{artist}} <span class="glyphicon glyphicon-remove"></span></a>
+                <a href="" ng-click="removeCriteria('genres', genre)" ng-repeat="genre in filters.genres" class="label label-default label-genre">{{genre}} <span class="glyphicon glyphicon-remove"></span></a>
+            </div>
         </div>
         <div class="col-md-10 col-sm-12" id="main-pane">

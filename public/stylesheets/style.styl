@@ -15,6 +15,9 @@ body
 h1
   color #000
 
+.row-margin-bottom
+  margin-bottom 15px
+
 #sidebar
   background-color #f3f3f3
   position fixed
@@ -28,7 +31,7 @@ h1
   border-color #DCDCDC
   box-shadow 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 1px 0px rgba(255, 255, 255, 0.1)
 
-#sidebar .glyphicon
+#sidebar li .glyphicon
   padding-right 20px
 
 #sidebar .nav a
@@ -45,6 +48,9 @@ h1
 #sidebar i
   top 0px !important
 
+.glyphicon-clickable
+  cursor pointer
+
 #loader-container
   margin 0
   padding 0
@@ -59,13 +65,15 @@ h1
 
 #main-pane
   background-image linear-gradient(to bottom, #E5E5E5 0px, #F0F0F0 100%)
+  min-height 100vh
 
 .manga-cell
   text-align center
   height 370px
 
-.manga-cell-thumbnail img
+.manga-cell-thumbnail-img
   margin 0 auto
+  cursor pointer
 
 .manga-cell-year
   font-size 0.85em
@@ -81,6 +89,12 @@ h1
   font-weight bold
   font-variant small-caps
 
-.label-genre
+.label-author
+  background-color color-C
+
+.label-artist
+  background-color color-E
+
+.label-genre, .label-artist, .label-author
   margin 0 3px
   display inline-block

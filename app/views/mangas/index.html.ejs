@@ -1,25 +1,27 @@
 <% include ../layouts/header.html.ejs %>
+<% include ../templates/mangaDetails.ng-html.ejs %>
+
 <div ng-controller="MangaCtrl">
     <div class="row" id="loader-container" ng-show="loading" ng-animate="slide">
         <span class="loader"><span class="loader-inner"></span></span>
     </div>
 
     <div ng-show="loadingFailure">
-        <alert type="danger">Oups, il y a une erreur ! Essayez de rafraîchir la page. Si le problème persiste, contactez-nous ;-).</alert>
+        <alert type="danger">Oops, something has come up! Try to refresh the browser. If the issue persists, contact us ;-).</alert>
     </div>
 
     <div class="row" id="manga-list" ng-show="loadingSuccess">
-        <div class="col-md-4 col-sm-6" ng-repeat="manga in searchResults = (mangas | filter:filters) | limitTo: itemPerPage * currentPage | limitTo: itemPerPage * currentPage < itemsCount ? -itemPerPage : itemPerPage - (itemPerPage * currentPage - itemsCount)">
+        <div class="col-md-4 col-sm-6" ng-repeat="manga in searchResults = (mangas | criteria:filters) | limitTo: itemPerPage * currentPage | limitTo: itemPerPage * currentPage < itemsCount ? -itemPerPage : itemPerPage - (itemPerPage * currentPage - itemsCount)">
             <div class="manga-cell well">
                 <div class="manga-cell-thumbnail">
-                    <a href="" ng-click="openDetails(manga)">
-                        <img src="{{manga.thumbnail}}" class="thumbnail" alt="thumbnail" />
-                    </a>
+                    <img src="{{manga.thumbnail}}" class="thumbnail manga-cell-thumbnail-img" alt="thumbnail" ng-click="openDetails(manga)" />
                 </div>
                 <div>
                     <span class="manga-cell-title">{{manga.title}}</span> <span class="manga-cell-year">({{manga.year}})</span>
                 </div>
-                <div class="manga-cell-genres">{{manga.genres.join(", ")}}</div>
+                <div class="manga-cell-genres">
+                    <a href="" ng-repeat="genre in manga.genres" ng-click="addCriteria('genres', genre)">{{genre}}<span ng-show="!$last">, </span></a>
+                </div>
             </div>
         </div>
     </div>
@@ -28,50 +30,6 @@
         <pagination total-items="searchResults.length" items-per-page="itemPerPage" ng-model="currentPage" max-size="10" class="pagination-sm" boundary-links="true" rotate="false"></pagination>
     </div>
 
-    <script type="text/ng-template" id="manga-details-modal.html">
-        <div class="modal-header">
-            <h3 class="modal-title">{{manga.title}}</h3>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="{{manga.thumbnail}}" class="thumbnail center-block" alt="thumbnail" />
-                </div>
-                <div class="col-md-8">
-                    <div class="row manga-details-row">
-                        <div class="col-md-3 manga-details-desc">Author(s):</div>
-                        <div class="col-md-9">{{manga.authors.join(", ")}}</div>
-                    </div>
-                    <div class="row manga-details-row">
-                        <div class="col-md-3 manga-details-desc">Artist(s):</div>
-                        <div class="col-md-9">{{manga.artists.join(", ")}}</div>
-                    </div>
-                    <div class="row manga-details-row">
-                        <div class="col-md-3 manga-details-desc">Year:</div>
-                        <div class="col-md-9">{{manga.year}}</div>
-                    </div>
-                    <div class="row manga-details-row">
-                        <div class="col-md-3 manga-details-desc">Genre(s):</div>
-                        <div class="col-md-9">
-                            <a ng-repeat="genre in manga.genres" href="" ng-click="search(genre)" class="label label-default label-genre">{{genre}}</a>
-                        </div>
-                    </div>
-                    <div class="row manga-details-row" ng-show="manga.suggestions.length > 0">
-                        <div class="col-md-3 manga-details-desc">Similar:</div>
-                        <div class="col-md-9">{{manga.suggestions.join(", ")}}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <span class="manga-details-desc">Summary:</span>
-                    <p class="text-justify">{{manga.summary}}</p>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
-        </div>
-    </script>
 </div>
+
 <% include ../layouts/footer.html.ejs %>
